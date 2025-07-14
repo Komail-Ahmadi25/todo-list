@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="./src/output.css">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-80">
+        <h2 class="text-center text-2xl font-bold mb-4 text-gray-700">Calculator</h2>
+
+        <input id="display" type="text" readonly
+            class="w-full mb-4 p-3 text-right text-xl border rounded bg-gray-50 outline-none" />
+
+        <div class="grid grid-cols-4 gap-3">
+            <!-- Buttons -->
+            <button class="btn" onclick="clearDisplay()">C</button>
+            <button class="btn" onclick="deleteLast()">⌫</button>
+            <button class="btn" onclick="append('%')">%</button>
+            <button class="btn bg-orange-400 text-white" onclick="append('/')">÷</button>
+
+            <button class="btn" onclick="append('7')">7</button>
+            <button class="btn" onclick="append('8')">8</button>
+            <button class="btn" onclick="append('9')">9</button>
+            <button class="btn bg-orange-400 text-white" onclick="append('*')">×</button>
+
+            <button class="btn" onclick="append('4')">4</button>
+            <button class="btn" onclick="append('5')">5</button>
+            <button class="btn" onclick="append('6')">6</button>
+            <button class="btn bg-orange-400 text-white" onclick="append('-')">−</button>
+
+            <button class="btn" onclick="append('1')">1</button>
+            <button class="btn" onclick="append('2')">2</button>
+            <button class="btn" onclick="append('3')">3</button>
+            <button class="btn bg-orange-400 text-white" onclick="append('+')">+</button>
+
+            <button class="btn col-span-2" onclick="append('0')">0</button>
+            <button class="btn" onclick="append('.')">.</button>
+            <button class="btn bg-green-500 text-white" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function append(char) {
+            display.value += char;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = 'Error';
+            }
+        }
+
+        // Optional: Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key.match(/[0-9+\-*/%.]/)) {
+                append(e.key);
+            } else if (e.key === 'Enter') {
+                calculate();
+            } else if (e.key === 'Backspace') {
+                deleteLast();
+            } else if (e.key === 'Escape') {
+                clearDisplay();
+            }
+        });
+    </script>
+
+    <style>
+        .btn {
+            @apply bg-gray-200 text-xl font-semibold rounded-lg p-3 hover:bg-gray-300 transition;
+        }
+    </style>
+
+</body>
+
+</html>
